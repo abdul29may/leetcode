@@ -1,4 +1,24 @@
 class Solution:
+    # Solution-1: Brute Force Recursion, trying all possible paths
+    def minPathSum_Recursion(self, grid: List[List[int]]) -> int:
+        ROWS = len(grid)
+        COLS = len(grid[0])
+
+        def dfs(r, c):
+            if r not in range(ROWS) or c not in range(COLS):
+                return float("inf")
+
+            if r == ROWS - 1 and c == COLS - 1:
+                return grid[r][c]
+
+            res1 = grid[r][c] + dfs(r, c + 1)
+            res2 = grid[r][c] + dfs(r + 1, c)
+
+            return min(res1, res2)
+
+        return dfs(0, 0)
+    
+    # Solution-2: Optmized Recursion by caching repeated paths
     def minPathSum_DP_Recursion_Memoization(self, grid: List[List[int]]) -> int:
         ROWS = len(grid)
         COLS = len(grid[0])
@@ -23,20 +43,4 @@ class Solution:
 
         return dfs(0, 0)
 
-    def minPathSum_Recursion(self, grid: List[List[int]]) -> int:
-        ROWS = len(grid)
-        COLS = len(grid[0])
 
-        def dfs(r, c):
-            if r not in range(ROWS) or c not in range(COLS):
-                return float("inf")
-
-            if r == ROWS - 1 and c == COLS - 1:
-                return grid[r][c]
-
-            res1 = grid[r][c] + dfs(r, c + 1)
-            res2 = grid[r][c] + dfs(r + 1, c)
-
-            return min(res1, res2)
-
-        return dfs(0, 0)
